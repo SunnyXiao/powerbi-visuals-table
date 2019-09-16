@@ -42,7 +42,7 @@ import "bootstrap";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { FilterTableApp } from "./reactApp";
+import PGTableApp from "./reactApp";
 
 import { VisualSettings } from "./settings";
 
@@ -66,9 +66,7 @@ export class Visual implements IVisual {
         const data: IFilterTableConditions = parseData(options.dataViews[0])
 
         ReactDOM.render(
-            <FilterTableApp       
-                conditionUpdateReceiver = { (receiver: (conditions: IFilterTableConditions) => void ) => this.receiver = receiver } 
-                settings = { this.settings }
+          <PGTableApp
             />, this.target);
 
         if (options.type == powerbi.VisualUpdateType.Data || options.type == powerbi.VisualUpdateType.All) {

@@ -8,93 +8,229 @@ import 'pqgrid/localize/pq-localize-en.js';
 import 'pqgrid/localize/pq-localize-ja.js';
 import 'pqgrid/localize/pq-localize-tr.js';
 
-class Pqgrid extends React.Component {
+
+class Pqgrid extends React.Component<any,{}>{
   componentDidMount() {
+    //@ts-ignore
     this.options = this.props.options;
+    //@ts-ignore
     pq.grid(this.refs.grid, this.options);
   }
   componentDidUpdate(prevProps) {
     //copy props.options to this.options.
+    //@ts-ignore
     Object.assign(this.options, this.props.options);
   }
   render() {
-    return <div ref='grid'></div>
+    return (<div ref='grid'></div>)
   }
 }
 
-class App extends React.Component {
+
+export default class PGTableApp extends React.Component<any,{}> {
   constructor(props) {
     super(props)
-    this.handleChange = this.handleChange.bind(this);
-    this.columns1 = [
-      { title: "Rank", width: 100, dataType: "integer", dataIndx: "rank" },
-      { title: "Company", width: 200, dataType: "string", dataIndx: "company" },
-      { title: "Revenues", width: 150, dataType: "float", dataIndx: "revenues", format: '#.0' },
-      { title: "Profits", width: 150, dataType: "float", dataIndx: "profits", format: '#.0' }
-    ]
-    this.data1 = [
-      { rank: 1, company: 'Exxon Mobil', revenues: 339938.0, profits: 36130.0 },
-      { rank: 2, company: 'Wal-Mart Stores', revenues: 315654.0, profits: 11231.0 },
-      { rank: 3, company: 'Royal Dutch Shell', revenues: 306731.0, profits: 25311.0 },
-      { rank: 4, company: 'BP', revenues: 267600.0, profits: 22341.0 },
-      { rank: 5, company: 'General Motors', revenues: 192604.0, profits: -10567.0 },
-      { rank: 6, company: 'Chevron', revenues: 189481.0, profits: 14099.0 },
-      { rank: 7, company: 'DaimlerChrysler', revenues: 186106.3, profits: 3536.3 },
-      { rank: 8, company: 'Toyota Motor', revenues: 185805.0, profits: 12119.6 },
-      { rank: 9, company: 'Ford Motor', revenues: 177210.0, profits: 2024.0 },
-      { rank: 10, company: 'ConocoPhillips', revenues: 166683.0, profits: 13529.0 },
-      { rank: 11, company: 'General Electric', revenues: 157153.0, profits: 16353.0 },
-      { rank: 12, company: 'Total', revenues: 152360.7, profits: 15250.0 },
-      { rank: 13, company: 'ING Group', revenues: 138235.3, profits: 8958.9 },
-      { rank: 14, company: 'Citigroup', revenues: 131045.0, profits: 24589.0 },
-      { rank: 15, company: 'AXA', revenues: 129839.2, profits: 5186.5 },
-      { rank: 16, company: 'Allianz', revenues: 121406.0, profits: 5442.4 },
-      { rank: 17, company: 'Volkswagen', revenues: 118376.6, profits: 1391.7 },
-      { rank: 18, company: 'Fortis', revenues: 112351.4, profits: 4896.3 },
-      { rank: 19, company: 'Cr��dit Agricole', revenues: 110764.6, profits: 7434.3 },
-      { rank: 20, company: 'American Intl. Group', revenues: 108905.0, profits: 10477.0 }
-    ]
-    this.state = {
-      showTop: false,
-      reactive: true,
-      locale: 'tr',
-      height: "flex",
-      numberCell: {
-        show: false
+    var colM = [
+      { title: "ShipCountry",width: 130, dataIndx: "ShipCountry" },
+      { title: "Customer Name", width: 130,dataIndx: "ContactName" },
+      { title: "Freight", width: 120, format: '$##,###.00',
+          summary: { type: "sum" },
+          dataType: "float", dataIndx: "Freight"
       },
-      columnTemplate: { width: 100 },
-      pageModel: {
-        type: 'local',
-        rPP: 5,
-        rPPOptions: [3, 5, 10],
-        layout: ["strDisplay", "|", "prev", "next"]
+      { title: "Shipping Via", width: 130, dataIndx: "ShipVia" },
+      { title: "Shipped Date", width: 100, dataIndx: "ShippedDate", dataType: "date",
+          summary: { type: "max" }
       },
-      colModel: this.columns1,
-      animModel: {
-        on: true
-      },
-      dataModel: {
-        data: this.data1
+      //{ title: "Shipping Address", width: 220, dataIndx: "ShipAddress" },
+      { title: "Shipping City", width: 130, dataIndx: "ShipCity" }
+    ];
+    var dataModel = [
+      {
+        "OrderID": 10409,
+        "ContactName": "Yvonne Moncada",
+        "EmployeeID": 3,
+        "OrderDate": "01/09/1997",
+        "RequiredDate": "02/06/1997",
+        "ShippedDate": "01/14/1997",
+        "ShipVia": "Speedy Express",
+        "Freight": 29.83,
+        "ShipName": "OcÃ©ano AtlÃ¡ntico Ltda.",
+        "ShipAddress": "Ing. Gustavo Moncada 8585 Piso 20-A",
+        "ShipCity": "Buenos Aires",
+        "ShipRegion": null,
+        "ShipPostalCode": "1010",
+        "ShipCountry": "Argentina",
+        "paid": true,
+        "code": "ar"
+      }, {
+        "OrderID": 10531,
+        "ContactName": "Yvonne Moncada",
+        "EmployeeID": 7,
+        "OrderDate": "05/08/1997",
+        "RequiredDate": "06/05/1997",
+        "ShippedDate": "05/19/1997",
+        "ShipVia": "Speedy Express",
+        "Freight": 8.12,
+        "ShipName": "OcÃ©ano AtlÃ¡ntico Ltda.",
+        "ShipAddress": "Ing. Gustavo Moncada 8585 Piso 20-A",
+        "ShipCity": "Buenos Aires",
+        "ShipRegion": null,
+        "ShipPostalCode": "1010",
+        "ShipCountry": "Argentina",
+        "paid": true,
+        "code": "ar"
+      }, {
+        "OrderID": 10898,
+        "ContactName": "Yvonne Moncada",
+        "EmployeeID": 4,
+        "OrderDate": "02/20/1998",
+        "RequiredDate": "03/20/1998",
+        "ShippedDate": "03/06/1998",
+        "ShipVia": "United Package",
+        "Freight": 1.27,
+        "ShipName": "OcÃ©ano AtlÃ¡ntico Ltda.",
+        "ShipAddress": "Ing. Gustavo Moncada 8585 Piso 20-A",
+        "ShipCity": "Buenos Aires",
+        "ShipRegion": null,
+        "ShipPostalCode": "1010",
+        "ShipCountry": "Argentina",
+        "paid": true,
+        "code": "ar"
+      }, {
+        "OrderID": 10958,
+        "ContactName": "Yvonne Moncada",
+        "EmployeeID": 7,
+        "OrderDate": "03/18/1998",
+        "RequiredDate": "04/15/1998",
+        "ShippedDate": "03/27/1998",
+        "ShipVia": "United Package",
+        "Freight": 49.56,
+        "ShipName": "OcÃ©ano AtlÃ¡ntico Ltda.",
+        "ShipAddress": "Ing. Gustavo Moncada 8585 Piso 20-A",
+        "ShipCity": "Buenos Aires",
+        "ShipRegion": null,
+        "ShipPostalCode": "1010",
+        "ShipCountry": "Argentina",
+        "paid": true,
+        "code": "ar"
+      }, {
+        "OrderID": 10986,
+        "ContactName": "Yvonne Moncada",
+        "EmployeeID": 8,
+        "OrderDate": "03/30/1998",
+        "RequiredDate": "04/27/1998",
+        "ShippedDate": "04/21/1998",
+        "ShipVia": "United Package",
+        "Freight": 217.86,
+        "ShipName": "OcÃ©ano AtlÃ¡ntico Ltda.",
+        "ShipAddress": "Ing. Gustavo Moncada 8585 Piso 20-A",
+        "ShipCity": "Buenos Aires",
+        "ShipRegion": null,
+        "ShipPostalCode": "1010",
+        "ShipCountry": "Argentina",
+        "paid": true,
+        "code": "ar"
+      }, {
+        "OrderID": 11019,
+        "ContactName": "Sergio GutiÃ©rrez",
+        "EmployeeID": 6,
+        "OrderDate": "04/13/1998",
+        "RequiredDate": "05/11/1998",
+        "ShippedDate": "",
+        "ShipVia": "Federal Shipping",
+        "Freight": 3.17,
+        "ShipName": "Rancho grande",
+        "ShipAddress": "Av. del Libertador 900",
+        "ShipCity": "Buenos Aires",
+        "ShipRegion": null,
+        "ShipPostalCode": "1010",
+        "ShipCountry": "Argentina",
+        "paid": true,
+        "code": "ar"
+      }, {
+        "OrderID": 10916,
+        "ContactName": "Sergio GutiÃ©rrez",
+        "EmployeeID": 1,
+        "OrderDate": "02/27/1998",
+        "RequiredDate": "03/27/1998",
+        "ShippedDate": "03/09/1998",
+        "ShipVia": "United Package",
+        "Freight": 63.77,
+        "ShipName": "Rancho grande",
+        "ShipAddress": "Av. del Libertador 900",
+        "ShipCity": "Buenos Aires",
+        "ShipRegion": null,
+        "ShipPostalCode": "1010",
+        "ShipCountry": "Argentina",
+        "paid": true,
+        "code": "ar"
       }
-
+    ]
+    var groupModel = {
+        on: true,
+      // dataIndx: ['ShipCountry', 'ContactName'],
+        collapsed: [false, true],
+        merge: true,
+        showSummary: [true, true],
+        //grandSummary: true,
+        title: [
+            "{0} ({1})",
+            "{0} - {1}"
+        ]
+    };
+    this.state = {
+      height: 500,
+      toolbar: {
+          items: [{
+              type: 'button',
+              label: "Toggle grouping",
+              listener: function () {
+                  this.Group().option({
+                      on: !this.option('groupModel.on')
+                  });
+              }
+          },{
+            type: 'select',
+            label: 'Format: ',                
+            attr: 'id="export_format"',
+            options: [{ xlsx: 'Excel', csv: 'Csv', htm: 'Html', json: 'Json'}]
+        },
+        {
+            type: 'button',
+            label: "Export",
+            icon: 'ui-icon-arrowthickstop-1-s',
+            listener: function () {
+                this.exportData({
+                    url: "/pro/demos/exportData",
+                    format: $("#export_format").val(),
+                    zip: false,
+                    render: true
+                });
+            }
+        }]
+      },
+      dataModel:{data: dataModel} ,
+      //scrollModel: { autoFit: true },
+      colModel: colM,
+      numberCell: { show: false },
+      menuIcon: true,
+      selectionModel: { type: 'cell' },
+      groupModel: groupModel,
+      hoverMode:'cell',
+      complete: function () {
+          //demonstrate editability of summary cells.
+          this.editCell({rowIndx: 1, dataIndx: 'Freight'});
+      },
+      showTitle: false,
+      resizable: true,            
+      hwrap: false,
+      wrap: false
     }
   }
-  handleChange(event) {
-    
-    this.setState({ locale: event.target.value });
-  }
   render() {
-    return <div>
-      <div style={{ margin: 20 }}>
-        <label>Change locale:</label>
-        <select value={this.state.locale} onChange={this.handleChange}>
-          <option value="en">English</option>
-          <option value="ja">Japanese</option>
-          <option value="tr">Turkish</option>
-        </select>
-      </div>
-
-      <Pqgrid options={this.state} />
+    return (<div>
+     <Pqgrid options={this.state} />
     </div>
+    )
   }
 }
