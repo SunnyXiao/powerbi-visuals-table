@@ -7,7 +7,7 @@
     "core-js": "^3.1.4",
     "jquery": "^3.4.1",
     "jquery-ui-pack": "^1.12.2",
-    "jszip": "^3.2.2",
+    "jszip": "^3.7.0",
     "popper.js": "^1.15.0",
     "powerbi-visuals-api": "2.6.1",
     "powerbi-visuals-utils-dataviewutils": "2.2.0",
